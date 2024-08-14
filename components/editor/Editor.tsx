@@ -39,6 +39,7 @@ export function Editor({
   currentUserType: UserType;
 }) {
   const status = useEditorStatus();
+  console.log("editor status:", status);
   const { threads } = useThreads();
 
   const initialConfig = liveblocksConfig({
