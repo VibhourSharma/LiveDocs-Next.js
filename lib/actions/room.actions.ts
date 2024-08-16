@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { liveblocks } from "../liveblocks";
 import { revalidatePath } from "next/cache";
 import { getAccessType, parseStringify } from "../utils";
-import { CloudHail } from "lucide-react";
+import { redirect } from "next/dist/server/api-utils";
 
 export const createDocument = async ({
   userId,
@@ -123,5 +123,15 @@ export const removeCollaborator = async ({
     });
   } catch (error) {
     console.log(`Error happened while removing a collaborator ${error}`);
+  }
+};
+
+export const deleteDocument = async (roomId: string) => {
+  try {
+    await liveblocks.deleteRoom(roomId);
+    revalidatePath("/");
+    redirect("/");
+  } catch (error) {
+    console.log(`Error happended while deleting a room: ${error}`);
   }
 };
